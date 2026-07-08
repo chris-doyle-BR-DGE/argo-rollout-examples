@@ -1,27 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollouts-demo
+  name: blue-green-demo
 spec:
   replicas: 5
   strategy:
     blueGreen:
-      activeService: rollouts-demo-active
-      previewService: rollouts-demo-preview
+      activeService: blue-green-demo-active
+      previewService: blue-green-demo-preview
       autoPromotionEnabled: false
       previewReplicaCount: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app: rollouts-demo
+      app: blue-green-demo
   template:
     metadata:
       labels:
-        app: rollouts-demo
+        app: blue-green-demo
     spec:
       containers:
-        - name: rollouts-demo
-          image: argoproj/rollouts-demo:yellow
+        - name: blue-green-demo
+          image: argoproj/blue-green:yellow
           ports:
             - name: http
               containerPort: 8080
